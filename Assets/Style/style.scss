@@ -1,0 +1,24 @@
+﻿$themeColor-Light: #f7f7f7; 
+
+$themeColor-Dark:#b68d4c;
+$theme-font: verdana, sans-serif;
+
+@font-face {
+    font-family: brewfont;
+    src: url(.././Files/Brewmaster-Gothic-Round.ttf);
+}
+
+.modal{
+
+    overflow:visible;
+} 
+
+
+body {
+    font-family: brewfont;
+    background-color: $themeColor-Light;
+
+    h1, h2 {
+        color: $themeColor-Dark
+    }
+}
