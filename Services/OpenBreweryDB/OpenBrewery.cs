@@ -45,6 +45,7 @@ namespace AndCultureDemo.Services.OpenBreweryDB
 
                 HttpWebRequest breweryHttpWebRequest = null;
                 HttpWebResponse breweryHttpWebResponse = null;
+		JsonTextReader textReader = null;
                 try
                 {
 
@@ -55,7 +56,7 @@ namespace AndCultureDemo.Services.OpenBreweryDB
                     breweryHttpWebResponse = (HttpWebResponse)breweryHttpWebRequest.GetResponse();
 
                     JsonSerializer jsonSerializer = new JsonSerializer();
-                    JsonTextReader textReader = new JsonTextReader(new StreamReader(breweryHttpWebResponse.GetResponseStream()));
+                    textReader = new JsonTextReader(new StreamReader(breweryHttpWebResponse.GetResponseStream()));
                     List<Brewery> breweryToReturn = (List<Brewery>)jsonSerializer.Deserialize(textReader, typeof(List<Brewery>));
 
                     return breweryToReturn;
@@ -68,6 +69,8 @@ namespace AndCultureDemo.Services.OpenBreweryDB
                 finally
                 {
                     breweryHttpWebResponse.CloseAndDispose();
+		textReader.CloseAndDispose();
+			
                 }
                 
 
