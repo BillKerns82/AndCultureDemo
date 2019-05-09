@@ -33,10 +33,12 @@ namespace AndCultureDemo.Controllers.api
         public ActionResult Get()
         {
 
+		Task<List<Brewery>> toExecute = null;
+
             try
             {
                 IOpenBrewery<Brewery> breweryService = ServiceProvider.GetService<IOpenBrewery<Brewery>>();
-                Task<List<Brewery>> toExecute = breweryService.GetResult(Request.QueryString.Value);
+                toExecute = breweryService.GetResult(Request.QueryString.Value);
                 toExecute.Start();
                 Task<Stream>.WaitAll(toExecute);
                 return Json(toExecute.Result);
@@ -48,7 +50,10 @@ namespace AndCultureDemo.Controllers.api
             }
             finally
             {
-
+		if(toExecute != null)
+		{
+			toExecute.Dispose();
+		}
             }
             return new BadRequestResult();
         }
